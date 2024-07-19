@@ -33,7 +33,9 @@ module.exports = class LoginController {
       const secret = process.env.SECRET;
       const token = jwt.sign({ id: user._id }, secret);
 
-      res.status(200).json({ msg: "Autenticação realizada com sucesso!", token });
+      res
+        .status(200)
+        .json({ msg: "Autenticação realizada com sucesso!", token });
     } catch (error) {
       res.status(500).json({ msg: error });
     }
@@ -44,11 +46,11 @@ module.exports = class LoginController {
 
     // check if user exists
     const user = await User.findById(id, "-password");
-  
+
     if (!user) {
       return res.status(404).json({ msg: "Usuário não encontrado!" });
     }
-  
+
     res.status(200).json({ user });
   }
 };
